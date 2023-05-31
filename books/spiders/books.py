@@ -41,3 +41,5 @@ class BookScrapy(scrapy.Spider):
                 "status": status,
                 "rating_star": rating 
             }
+        
+
