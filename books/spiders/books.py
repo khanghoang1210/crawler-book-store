@@ -1,4 +1,5 @@
 import scrapy
+from books.items import BooksItem
 
 
 class BookScrapy(scrapy.Spider):
@@ -34,12 +35,18 @@ class BookScrapy(scrapy.Spider):
         p_class = response.css("article  p.star-rating::attr(class)").get()
         rating = p_class.split(' ')[1]
 
-        yield  {
-                "poster_link": poster_link,
-                "book_name": book_name,
-                "book_price": book_price,
-                "status": status,
-                "rating_star": rating 
-            }
-        
+        books_item = BooksItem()
+        books_item["poster_link"] = poster_link
+        books_item["book_name"] = book_name.replace(",","").replace("'","")
+        books_item["book_price"] = book_price
+        books_item["status"] = status
+        books_item["rating_star"] = rating
 
+        yield books_item
+        # yield  {
+        #         "poster_link": poster_link,
+        #         "book_name": book_name,
+        #         "book_price": book_price,
+        #         "status": status,
+        #         "rating_star": rating 
+        #     }
